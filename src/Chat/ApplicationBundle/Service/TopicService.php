@@ -43,7 +43,7 @@ class TopicService
      *
      * @return null|Topic
      */
-    private function fetchById($topicId)
+    public function fetchById($topicId)
     {
         return $this->topicRepository->find($topicId);
     }

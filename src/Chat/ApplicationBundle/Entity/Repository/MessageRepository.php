@@ -3,6 +3,7 @@
 namespace Chat\ApplicationBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Chat\ApplicationBundle\Entity\Message;
 
 /**
  * MessageRepository
@@ -12,4 +13,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+    /**
+     * Persist a Message entity to database
+     *
+     * @param Message $message
+     *
+     * @return int Id of the saved Message
+     */
+    public function save(Message $message)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($message);
+        $entityManager->flush($message);
+
+        return $message->getId();
+    }
+
+    /**
+     * Remove a Message entity from database
+     *
+     * @param Message $message
+     */
+    public function remove(Message $message)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->remove($message);
+        $entityManager->flush($message);
+    }
 }

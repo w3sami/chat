@@ -3,7 +3,7 @@
 namespace Chat\ApplicationBundle\Service;
 
 
-use Chat\ApplicationBundle\Entity\Feed;
+use Chat\ApplicationBundle\Entity\Message;
 use Chat\ApplicationBundle\Entity\Repository\MessageRepository;
 
 /**
@@ -46,5 +46,25 @@ class MessageService
     private function fetchById($messageId)
     {
         return $this->messageRepository->find($messageId);
+    }
+
+    /**
+     * @param Message $message
+     *
+     * @return Message The saved Message
+     */
+    public function save(Message $message)
+    {
+        $messageId = $this->messageRepository->save($message);
+
+        return $this->fetchById($messageId);
+    }
+
+    /**
+     * @param Message $message
+     */
+    public function remove(Message $message)
+    {
+        $this->messageRepository->remove($message);
     }
 }

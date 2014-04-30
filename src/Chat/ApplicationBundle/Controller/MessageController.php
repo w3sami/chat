@@ -3,6 +3,7 @@
 namespace Chat\ApplicationBundle\Controller;
 
 use Chat\ApplicationBundle\Entity\Message;
+use Chat\ApplicationBundle\Entity\Topic;
 use Chat\ApplicationBundle\Service\MessageService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -90,20 +91,33 @@ class MessageController
      * )
      *
      * @Route("/")
+     * @ParamConverter("smart", name="topic")
      * @ParamConverter("message", converter="fos_rest.request_body")
      * @Method("POST")
      * @Rest\View(statusCode=201)
      */
-    public function createAction(Message $message, ConstraintViolationListInterface $validationErrors)
+    public function createAction(Message $message, $topic, ConstraintViolationListInterface $validationErrors)
     {
+        //print_r($topic);die();
+
+        if (!$topic instanceof Topic) {
+            return RestView::create(
+                ['errors' => 'Unknown topic'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+
         // Handle validation errors
-        if (count($validationErrors) > 0) {
+        if (count($validationErrors) > 0 || !$topic instanceof Topic) {
             return RestView::create(
                 ['errors' => $validationErrors],
                 Response::HTTP_BAD_REQUEST
             );
         }
-
+        $message->setTopic($topic);
+        //var_dump($message);
+        //\Doctrine\Common\Util\Debug::dump($message);
         return $this->messageService->save($message);
     }
 

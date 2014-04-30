@@ -5,6 +5,7 @@ namespace Chat\ApplicationBundle\Controller;
 use Chat\ApplicationBundle\Entity\Topic;
 use Chat\ApplicationBundle\Service\TopicService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

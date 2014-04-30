@@ -8,6 +8,8 @@ parameters:
     chat_application.topic.repository.class: Chat\ApplicationBundle\Repository\TopicRepository
     chat_application.topic.entity.class: Chat\ApplicationBundle\Entity\Topic
     chat_application.topic.service.class: Chat\ApplicationBundle\Service\TopicService
+    chat_application.json_and_query_param_converter.class: Chat\ApplicationBundle\Request\ParamConverter\JsonAndQueryConverter
+    chat_application.smart_param_converter.class: Chat\ApplicationBundle\Request\ParamConverter\SmartConverter
 
 services:
     chat_application.message.repository:
@@ -26,3 +28,14 @@ services:
     chat_application.topic:
         class: %chat_application.topic.service.class%
         arguments: [@chat_application.topic.repository]
+
+    chat_application.json_and_query_param_converter:
+        class: %chat_application.json_and_query_param_converter.class%
+        tags:
+            - { name: request.param_converter, priority: -2, converter: json_and_query }
+
+    chat_application.smart_param_converter:
+        class: %chat_application.smart_param_converter.class%
+        tags:
+            - { name: request.param_converter, priority: -1, converter: smart }
+        arguments: [@chat_application.topic]
