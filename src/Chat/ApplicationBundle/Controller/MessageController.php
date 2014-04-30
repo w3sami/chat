@@ -38,6 +38,7 @@ class MessageController
      * Return a collection of Messages
      *
      * @ApiDoc(
+     *  resource=true,
      *  statusCodes={200="OK"}
      * )
      *
@@ -54,7 +55,6 @@ class MessageController
      * Return a single Message by the given id
      *
      * @ApiDoc(
-     *  resource=true,
      *  output={
      *      "class"="Chat\ApplicationBundle\Entity\Message"
      *  },
@@ -69,12 +69,8 @@ class MessageController
      * @Method("GET")
      * @Rest\View()
      */
-    public function getAction(Message $message = null)
+    public function getAction(Message $message)
     {
-        if (!$message) {
-            throw new NotFoundHttpException('Message not found.');
-        }
-
         return $message;
     }
 
@@ -98,16 +94,6 @@ class MessageController
      */
     public function createAction(Message $message, $topic, ConstraintViolationListInterface $validationErrors)
     {
-        //print_r($topic);die();
-
-        if (!$topic instanceof Topic) {
-            return RestView::create(
-                ['errors' => 'Unknown topic'],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
-
         // Handle validation errors
         if (count($validationErrors) > 0 || !$topic instanceof Topic) {
             return RestView::create(
@@ -116,6 +102,7 @@ class MessageController
             );
         }
         $message->setTopic($topic);
+        $message->setTime(new \DateTime());
         //var_dump($message);
         //\Doctrine\Common\Util\Debug::dump($message);
         return $this->messageService->save($message);
@@ -136,12 +123,8 @@ class MessageController
      * @Method("DELETE")
      * @Rest\View(statusCode=204)
      */
-    public function removeAction(Message $message = null)
+    public function removeAction(Message $message)
     {
-        if (!$message) {
-            throw new NotFoundHttpException('Message not found.');
-        }
-
         $this->messageService->remove($message);
 
         return [];

@@ -22,16 +22,22 @@ class Message
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Serializer\Groups({"minimal"})
      */
     private $message;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"minimal"})
      */
     private $time;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @Serializer\Groups({"minimal"})
      */
     private $user;
 

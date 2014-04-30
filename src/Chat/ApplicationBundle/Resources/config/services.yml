@@ -32,10 +32,10 @@ services:
     chat_application.json_and_query_param_converter:
         class: %chat_application.json_and_query_param_converter.class%
         tags:
-            - { name: request.param_converter, priority: -2, converter: json_and_query }
+            - { name: request.param_converter, priority: -3, converter: json_and_query }
 
     chat_application.smart_param_converter:
         class: %chat_application.smart_param_converter.class%
         tags:
-            - { name: request.param_converter, priority: -1, converter: smart }
+            - { name: request.param_converter, priority: -2, converter: smart }
         arguments: [@chat_application.topic]

@@ -66,6 +66,7 @@ class TopicController
      * Return a collection of Topics
      *
      * @ApiDoc(
+     * resource=true,
      *  statusCodes={200="OK"}
      * )
      *
@@ -84,7 +85,6 @@ class TopicController
      * Return a single Topic by the given id
      *
      * @ApiDoc(
-     *  resource=true,
      *  output={
      *      "class"="Chat\ApplicationBundle\Entity\Topic"
      *  },
@@ -107,4 +107,53 @@ class TopicController
 
         return $topic;
     }
+
+    /**
+     * Remove a Topic
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *      204="OK",
+     *      404="Topic not found"
+     *  }
+     * )
+     *
+     * @Route("/{id}", requirements={"id" = "\d+"})
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
+     * @Method("DELETE")
+     * @Rest\View(statusCode=204)
+     */
+    public function removeAction(Topic $topic)
+    {
+        $this->topicService->remove($topic);
+
+        return [];
+    }
+
+    /**
+     * Return a collection of Messages for a single Topic by the given id
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *      200="OK",
+     *      404="Topic not found"
+     *  }
+     * )
+     *
+     * @Route("/{id}/messages", requirements={"id" = "\d+"})
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
+     * @Method("GET")
+     * @Rest\View(serializerGroups={"minimal"})
+     */
+    public function getMessageCollectionAction(Topic $topic = null)
+    {
+        if (!$topic) {
+            throw new NotFoundHttpException('Topic not found.');
+        }
+
+        return $topic->getMessages();
+    }
+    
+    
+    
 }

@@ -30,6 +30,8 @@ class Topic
 
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="Topic")
+     *
+     * @serializer\Exclude
      */
     private $Messages;
     /**
