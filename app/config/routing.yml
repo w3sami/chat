@@ -1,0 +1,13 @@
+google_login:
+    pattern: /login/check-google
+
+# NelmioApiDocBundle Routes
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+# Chat Routes
+chat_application:
+    resource: "@ChatApplicationBundle/Controller/"
+    type:     annotation
+    prefix:   /api

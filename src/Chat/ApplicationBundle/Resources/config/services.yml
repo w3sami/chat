@@ -1,0 +1,28 @@
+imports:
+    - { resource: controllers.yml }
+
+parameters:
+    chat_application.message.repository.class: Chat\ApplicationBundle\Repository\MessageRepository
+    chat_application.message.entity.class: Chat\ApplicationBundle\Entity\Message
+    chat_application.message.service.class: Chat\ApplicationBundle\Service\MessageService
+    chat_application.topic.repository.class: Chat\ApplicationBundle\Repository\MessageItemRepository
+    chat_application.topic.entity.class: Chat\ApplicationBundle\Entity\MessageItem
+    chat_application.topic.service.class: Chat\ApplicationBundle\Service\MessageItemService
+
+services:
+    chat_application.message.repository:
+        class: %chat_application.message.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [%chat_application.message.entity.class%]
+    chat_application.message:
+        class: %chat_application.message.service.class%
+        arguments: [@chat_application.message.repository]
+    chat_application.topic.repository:
+        class: %chat_application.topic.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [%chat_application.topic.entity.class%]
+    chat_application.topic:
+        class: %chat_application.topic.service.class%
+        arguments: [@chat_application.topic.repository]

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<orm-designer version="2.3.5.882" name="chat" mvc="Symfony2" orm="Doctrine2" uuid="5f975dbc-2477-477f-ab27-6d5a1e4fd8bf">
+  <module name="ApplicationBundle" import-format="Doctrine2Php" import-path="../src/Chat/ApplicationBundle/Entity" uuid="0d266a7a-6ddd-4016-8311-6f658f3dffc5">
+    <entity name="Message" uuid="e5274499-708a-44ec-b8bb-776da364b08d">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="62c8e466-3d65-4371-945c-26e7e7d33b7b"/>
+      <field name="message" type="text" uuid="c1b31bad-9300-4cac-a1a0-577e42d2d024"/>
+      <field name="time" type="datetime" uuid="21a58e82-3c1e-4acd-8918-646b0d208f81"/>
+      <field name="user" type="string" size="50" uuid="3536a2b6-c7c1-4dba-8240-b8b84964f7e7"/>
+      <field name="topic_id" type="integer" required="true" uuid="051f3c71-e30a-423d-a8ac-c636e55cbaeb"/>
+      <orm-attributes>
+        <attribute name="repository-class">Chat\ApplicationBundle\Entity\Repository\MessageRepository</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="Message" to="Topic" caption="Topic Message" owner-alias="Messages" inverse-alias="Topic" uuid="70212ce7-b14a-4eea-95f8-f2b88dd58d99">
+      <association-field from="topic_id" to="id"/>
+    </association>
+    <entity name="Topic" uuid="79c6a62a-3e0f-43b5-89c5-faf07c9ca87e">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="76a93a64-53f5-452d-a251-f61a19c22c36"/>
+      <field name="title" type="string" size="100" uuid="5003e86f-f5dd-4a23-b24d-dec203541044"/>
+      <field name="description" type="text" uuid="3a8cfae7-88ca-4647-9efb-0c0b89451289"/>
+      <orm-attributes>
+        <attribute name="repository-class">Chat\ApplicationBundle\Entity\Repository\TopicRepository</attribute>
+      </orm-attributes>
+    </entity>
+  </module>
+  <visual-data>
+    <module uuid="0d266a7a-6ddd-4016-8311-6f658f3dffc5" bk-color="4294114555" position-x="61" position-y="72" size-x="11" size-x2="686" size-y="22" size-y2="444"/>
+    <project uuid="5f975dbc-2477-477f-ab27-6d5a1e4fd8bf" size-x="0" size-x2="784" size-y="0" size-y2="536"/>
+    <association uuid="70212ce7-b14a-4eea-95f8-f2b88dd58d99" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0"/>
+    <entity uuid="79c6a62a-3e0f-43b5-89c5-faf07c9ca87e" position-x="175" position-y="51" size-x="0" size-x2="90" size-y="0" size-y2="59"/>
+    <entity uuid="e5274499-708a-44ec-b8bb-776da364b08d" position-x="177" position-y="167" size-x="0" size-x2="91" size-y="0" size-y2="87"/>
+  </visual-data>
+</orm-designer>
