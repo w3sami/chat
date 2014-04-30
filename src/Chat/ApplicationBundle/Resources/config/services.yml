@@ -5,9 +5,9 @@ parameters:
     chat_application.message.repository.class: Chat\ApplicationBundle\Repository\MessageRepository
     chat_application.message.entity.class: Chat\ApplicationBundle\Entity\Message
     chat_application.message.service.class: Chat\ApplicationBundle\Service\MessageService
-    chat_application.topic.repository.class: Chat\ApplicationBundle\Repository\MessageItemRepository
-    chat_application.topic.entity.class: Chat\ApplicationBundle\Entity\MessageItem
-    chat_application.topic.service.class: Chat\ApplicationBundle\Service\MessageItemService
+    chat_application.topic.repository.class: Chat\ApplicationBundle\Repository\TopicRepository
+    chat_application.topic.entity.class: Chat\ApplicationBundle\Entity\Topic
+    chat_application.topic.service.class: Chat\ApplicationBundle\Service\TopicService
 
 services:
     chat_application.message.repository:

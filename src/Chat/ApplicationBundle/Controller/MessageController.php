@@ -132,28 +132,4 @@ class MessageController
 
         return [];
     }
-
-    /**
-     * Return a collection of MessageItems for a single Message by the given id
-     *
-     * @ApiDoc(
-     *  statusCodes={
-     *      200="OK",
-     *      404="Message not found"
-     *  }
-     * )
-     *
-     * @Route("/{id}/items", requirements={"id" = "\d+"})
-     * @ParamConverter("message", class="ChatApplicationBundle:Message")
-     * @Method("GET")
-     * @Rest\View()
-     */
-    public function getItemCollectionAction(Message $message = null)
-    {
-        if (!$message) {
-            throw new NotFoundHttpException('Message not found.');
-        }
-
-        return $message->getItems();
-    }
 }

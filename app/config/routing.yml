@@ -1,6 +1,3 @@
-google_login:
-    pattern: /login/check-google
-
 # NelmioApiDocBundle Routes
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

@@ -17,7 +17,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  *
  * @package Chat\ApplicationBundle\Controller
  *
- * @Route("/feeds/items", service="chat_application.topic.controller")
+ * @Route("/topics", service="chat_application.topic.controller")
  */
 class TopicController
 {
@@ -29,6 +29,36 @@ class TopicController
     public function __construct(TopicService $topicService)
     {
         $this->topicService = $topicService;
+    }
+
+    /**
+     * Create a new Topic
+     *
+     * @ApiDoc(
+     *  input="Chat\ApplicationBundle\Entity\Topic",
+     *  output="Chat\ApplicationBundle\Entity\Topic",
+     *  statusCodes={
+     *      201="Created",
+     *      400="Validation errors"
+     *  }
+     * )
+     *
+     * @Route("/")
+     * @ParamConverter("topic", converter="fos_rest.request_body")
+     * @Method("POST")
+     * @Rest\View(statusCode=201)
+     */
+    public function createAction(Topic $topic, ConstraintViolationListInterface $validationErrors)
+    {
+        // Handle validation errors
+        if (count($validationErrors) > 0) {
+            return RestView::create(
+                ['errors' => $validationErrors],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return $this->topicService->save($topic);
     }
 
     /**
@@ -64,14 +94,14 @@ class TopicController
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
-     * @ParamConverter("feed", class="ChatApplicationBundle:Topic")
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
      * @Method("GET")
      * @Rest\View()
      */
     public function getAction(Topic $topic = null)
     {
         if (!$topic) {
-            throw new NotFoundHttpException('Feed item not found.');
+            throw new NotFoundHttpException('Topic not found.');
         }
 
         return $topic;

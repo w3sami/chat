@@ -3,69 +3,69 @@
 namespace Chat\ApplicationBundle\Service;
 
 
-use Chat\ApplicationBundle\Entity\Feed;
-use Chat\ApplicationBundle\Repository\FeedRepository;
+use Chat\ApplicationBundle\Entity\Topic;
+use Chat\ApplicationBundle\Entity\Repository\TopicRepository;
 
 /**
- * Class FeedService
+ * Class TopicService
  *
  * @package Chat\ApplicationBundle\Service
  */
-class FeedService
+class TopicService
 {
     /**
-     * @var \Chat\ApplicationBundle\Repository\FeedRepository
+     * @var \Chat\ApplicationBundle\Entity\Repository\TopicRepository
      */
-    private $feedRepository;
+    private $topicRepository;
 
     /**
-     * @param FeedRepository $feedRepository
+     * @param TopicRepository $topicRepository
      */
-    public function __construct(FeedRepository $feedRepository)
+    public function __construct(TopicRepository $topicRepository)
     {
-        $this->feedRepository = $feedRepository;
+        $this->topicRepository = $topicRepository;
     }
 
     /**
-     * Return all Feed entities
+     * Return all Topic entities
      *
-     * @return array Array of Feed entities
+     * @return array Array of Topic entities
      */
     public function fetchAll()
     {
-        return $this->feedRepository->findAll();
+        return $this->topicRepository->findAll();
     }
 
     /**
-     * Return one Feed entity by the given id
+     * Return one Topic entity by the given id
      *
-     * @param int $feedId
+     * @param int $topicId
      *
-     * @return null|Feed
+     * @return null|Topic
      */
-    private function fetchById($feedId)
+    private function fetchById($topicId)
     {
-        return $this->feedRepository->find($feedId);
+        return $this->topicRepository->find($topicId);
     }
 
     /**
-     * @param Feed $feed
+     * @param Topic $topic
      *
-     * @return Feed The saved Feed
+     * @return Topic The saved Topic
      */
-    public function save(Feed $feed)
+    public function save(Topic $topic)
     {
-        $feedId = $this->feedRepository->save($feed);
+        $topicId = $this->topicRepository->save($topic);
 
-        return $this->fetchById($feedId);
+        return $this->fetchById($topicId);
     }
 
     /**
-     * @param Feed $feed
+     * @param Topic $topic
      */
-    public function remove(Feed $feed)
+    public function remove(Topic $topic)
     {
-        $this->feedRepository->remove($feed);
+        $this->topicRepository->remove($topic);
     }
 
 

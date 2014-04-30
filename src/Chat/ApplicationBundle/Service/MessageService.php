@@ -4,47 +4,47 @@ namespace Chat\ApplicationBundle\Service;
 
 
 use Chat\ApplicationBundle\Entity\Feed;
-use Chat\ApplicationBundle\Repository\FeedItemRepository;
+use Chat\ApplicationBundle\Entity\Repository\MessageRepository;
 
 /**
- * Class FeedItemService
+ * Class MessageService
  *
  * @package Chat\ApplicationBundle\Service
  */
-class FeedItemService
+class MessageService
 {
     /**
-     * @var \Chat\ApplicationBundle\Repository\FeedRepository
+     * @var \Chat\ApplicationBundle\Entity\Repository\MessageRepository
      */
-    private $feedItemRepository;
+    private $messageRepository;
 
     /**
-     * @param FeedItemRepository $feedItemRepository
+     * @param MessageRepository $messageRepository
      */
-    public function __construct(FeedItemRepository $feedItemRepository)
+    public function __construct(MessageRepository $messageRepository)
     {
-        $this->feedItemRepository = $feedItemRepository;
+        $this->messageRepository = $messageRepository;
     }
 
     /**
-     * Return all FeedItem entities
+     * Return all Message entities
      *
      * @return array Array of Feed entities
      */
     public function fetchAll()
     {
-        return $this->feedItemRepository->findAll();
+        return $this->messageRepository->findAll();
     }
 
     /**
-     * Return one FeedItem entity by the given id
+     * Return one Message entity by the given id
      *
-     * @param int $feedItemId
+     * @param int $messageId
      *
      * @return null|Feed
      */
-    private function fetchById($feedItemId)
+    private function fetchById($messageId)
     {
-        return $this->feedItemRepository->find($feedItemId);
+        return $this->messageRepository->find($messageId);
     }
 }
