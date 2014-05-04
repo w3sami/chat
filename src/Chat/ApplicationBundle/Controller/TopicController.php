@@ -62,6 +62,50 @@ class TopicController
         return $this->topicService->save($topic);
     }
 
+
+    /**
+     * Update a Topic
+     *
+     * @ApiDoc(
+     *  input="Chat\ApplicationBundle\Entity\Topic",
+     *  output="Chat\ApplicationBundle\Entity\Topic",
+     *  statusCodes={
+     *      200="Updated",
+     *      400="Validation errors"
+     *  }
+     * )
+     *
+     * @Route("/")
+     *
+     * @ParamConverter("topic", name="newTopic", converter="fos_rest.request_body")
+     * @ParamConverter("json_to_param")
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic", options={"id" = "id"})
+     *
+     * @Method("PUT")
+     * @Rest\View(statusCode=200)
+     */
+    public function updateAction(
+        Topic $newTopic,
+        Topic $topic,
+        ConstraintViolationListInterface $validationErrors
+    )
+    {
+        // Handle validation errors
+        if (count($validationErrors) > 0) {
+            return RestView::create(
+                ['errors' => $validationErrors],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        $topic->setTitle($newTopic->getTitle());
+        $topic->setDescription($newTopic->getDescription());
+
+        //var_dump($topic);
+        //\Doctrine\Common\Util\Debug::dump($topic);
+        return $this->topicService->save($topic);
+    }
+
+
     /**
      * Return a collection of Topics
      *
@@ -95,7 +139,7 @@ class TopicController
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
-     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic", options={"id" = "id"})
      * @Method("GET")
      * @Rest\View()
      */

@@ -65,7 +65,7 @@ class MessageController
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
-     * @ParamConverter("message", class="ChatApplicationBundle:Message")
+     * @ParamConverter("message", class="ChatApplicationBundle:Message", options={"id" = "id"})
      * @Method("GET")
      * @Rest\View()
      */
@@ -87,12 +87,13 @@ class MessageController
      * )
      *
      * @Route("/")
-     * @ParamConverter("smart", name="topic")
+     * @ParamConverter("json_to_param")
+     * @ParamConverter("topic", name="topic", class="ChatApplicationBundle:Topic", options={"id" = "topic_id"})
      * @ParamConverter("message", converter="fos_rest.request_body")
      * @Method("POST")
      * @Rest\View(statusCode=201)
      */
-    public function createAction(Message $message, $topic, ConstraintViolationListInterface $validationErrors)
+    public function createAction(Message $message, Topic $topic, ConstraintViolationListInterface $validationErrors)
     {
         // Handle validation errors
         if (count($validationErrors) > 0 || !$topic instanceof Topic) {
@@ -103,6 +104,53 @@ class MessageController
         }
         $message->setTopic($topic);
         $message->setTime(new \DateTime());
+        //var_dump($message);
+        //\Doctrine\Common\Util\Debug::dump($message);
+        return $this->messageService->save($message);
+    }
+
+    /**
+     * Update a Message
+     *
+     * @ApiDoc(
+     *  input="Chat\ApplicationBundle\Entity\Message",
+     *  output="Chat\ApplicationBundle\Entity\Message",
+     *  statusCodes={
+     *      200="Updated",
+     *      400="Validation errors"
+     *  }
+     * )
+     *
+     * @Route("/")
+     *
+     * @ParamConverter("message", name="newMessage", converter="fos_rest.request_body")
+     * @ParamConverter("json_to_param")
+     * @ParamConverter("topic", name="topic", class="ChatApplicationBundle:Topic", options={"id" = "topic_id"})
+     * @ParamConverter("message", class="ChatApplicationBundle:Message", options={"id" = "id"})
+     *
+     * @Method("PUT")
+     * @Rest\View(statusCode=200)
+     */
+    public function updateAction(
+                                 Message $message,
+                                 Message $newMessage,
+                                 Topic $topic,
+                                 ConstraintViolationListInterface $validationErrors
+    )
+    {
+
+        // Handle validation errors
+        if (count($validationErrors) > 0) {
+            return RestView::create(
+                ['errors' => $validationErrors],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        $message->setTopic($topic);
+        $message->setTime(new \DateTime());
+        $message->setUser($newMessage->getUser());
+        $message->setMessage($newMessage->getMessage());
+
         //var_dump($message);
         //\Doctrine\Common\Util\Debug::dump($message);
         return $this->messageService->save($message);
