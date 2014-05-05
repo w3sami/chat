@@ -7,6 +7,7 @@
       <field name="time" type="datetime" uuid="21a58e82-3c1e-4acd-8918-646b0d208f81"/>
       <field name="user" type="string" size="50" uuid="3536a2b6-c7c1-4dba-8240-b8b84964f7e7"/>
       <field name="topic_id" type="integer" required="true" uuid="051f3c71-e30a-423d-a8ac-c636e55cbaeb"/>
+      <field name="email" type="string" size="250" uuid="fff268fc-13ef-45bc-9431-b5d971910849"/>
       <orm-attributes>
         <attribute name="repository-class">Chat\ApplicationBundle\Entity\Repository\MessageRepository</attribute>
       </orm-attributes>

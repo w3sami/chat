@@ -60,6 +60,14 @@ class Message
     private $user;
 
     /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     * 
+     * @Assert\Length(max = "250")
+     * @Serializer\Groups({"minimal"})
+     */
+    private $email;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="Messages")
      * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", nullable=false)
      */
@@ -165,5 +173,28 @@ class Message
     public function getTopic()
     {
         return $this->Topic;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Message
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
