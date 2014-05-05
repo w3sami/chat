@@ -167,7 +167,7 @@ class MessageController
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
-     * @ParamConverter("message", class="ChatApplicationBundle:Message")
+     * @ParamConverter("message", class="ChatApplicationBundle:Message", options={"id" = "id"})
      * @Method("DELETE")
      * @Rest\View(statusCode=204)
      */

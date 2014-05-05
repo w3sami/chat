@@ -163,7 +163,7 @@ class TopicController
      * )
      *
      * @Route("/{id}", requirements={"id" = "\d+"})
-     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic", options={"id" = "id"})
      * @Method("DELETE")
      * @Rest\View(statusCode=204)
      */
@@ -185,7 +185,7 @@ class TopicController
      * )
      *
      * @Route("/{id}/messages", requirements={"id" = "\d+"})
-     * @ParamConverter("topic", class="ChatApplicationBundle:Topic")
+     * @ParamConverter("topic", class="ChatApplicationBundle:Topic", options={"id" = "id"})
      * @Method("GET")
      * @Rest\View(serializerGroups={"minimal"})
      */
