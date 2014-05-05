@@ -75,7 +75,7 @@ class TopicController
      *  }
      * )
      *
-     * @Route("")
+     * @Route("/{id}", requirements={"id" = "\d+"})
      *
      * @ParamConverter("topic", name="newTopic", converter="fos_rest.request_body")
      * @ParamConverter("json_to_param")

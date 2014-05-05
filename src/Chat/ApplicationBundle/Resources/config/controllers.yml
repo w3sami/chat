@@ -1,7 +1,7 @@
 services:
     chat_application.message.controller:
         class: Chat\ApplicationBundle\Controller\MessageController
-        arguments: [@chat_application.message]
+        arguments: [@chat_application.message, @chat_application.topic]
     chat_application.topic.controller:
         class: Chat\ApplicationBundle\Controller\TopicController
         arguments: [@chat_application.topic]

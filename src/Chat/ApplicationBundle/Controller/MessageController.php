@@ -5,6 +5,8 @@ namespace Chat\ApplicationBundle\Controller;
 use Chat\ApplicationBundle\Entity\Message;
 use Chat\ApplicationBundle\Entity\Topic;
 use Chat\ApplicationBundle\Service\MessageService;
+use Chat\ApplicationBundle\Service\TopicService;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -29,26 +31,54 @@ class MessageController
      */
     private $messageService;
 
-    public function __construct(MessageService $messageService)
+    /**
+     * @var \Chat\ApplicationBundle\Service\TopicService
+     */
+    private $topicService;
+
+    public function __construct(MessageService $messageService, TopicService $topicService)
     {
         $this->messageService = $messageService;
+        $this->topicService = $topicService;
     }
 
     /**
-     * Return a collection of Messages
+     * Return a collection of Messages, optionally for a single Topic by the given id
      *
      * @ApiDoc(
      *  resource=true,
-     *  statusCodes={200="OK"}
+     *  statusCodes={
+     *      200="OK",
+     *      404="Message/Topic not found"
+     *  }
+     * )
+     *
+     * @Rest\QueryParam(
+     *  name="topic_id",
+     *  default=null,
+     *  description="Filters response by topic."
      * )
      *
      * @Route("")
      * @Method("GET")
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"minimal"})
      */
-    public function getCollectionAction()
+    public function getMessageCollectionAction(ParamFetcherInterface $paramFetcher)
     {
+        $topicId = $paramFetcher->get('topic_id');
+
+        if ($topicId) {
+            $topic = $this->topicService->fetchById($topicId);
+
+            if($topic) {
+                return $topic->getMessages();
+            }
+
+            return [];
+        }
+
         return $this->messageService->fetchAll();
+
     }
 
     /**
@@ -121,7 +151,7 @@ class MessageController
      *  }
      * )
      *
-     * @Route("")
+     * @Route("/{id}", requirements={"id" = "\d+"})
      *
      * @ParamConverter("message", name="newMessage", converter="fos_rest.request_body")
      * @ParamConverter("json_to_param")
