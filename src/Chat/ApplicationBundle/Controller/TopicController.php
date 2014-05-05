@@ -44,7 +44,7 @@ class TopicController
      *  }
      * )
      *
-     * @Route("/")
+     * @Route("")
      * @ParamConverter("topic", converter="fos_rest.request_body")
      * @Method("POST")
      * @Rest\View(statusCode=201)
@@ -75,7 +75,7 @@ class TopicController
      *  }
      * )
      *
-     * @Route("/")
+     * @Route("")
      *
      * @ParamConverter("topic", name="newTopic", converter="fos_rest.request_body")
      * @ParamConverter("json_to_param")
@@ -114,7 +114,7 @@ class TopicController
      *  statusCodes={200="OK"}
      * )
      *
-     * @Route("/")
+     * @Route("")
      * @Method("GET")
      * @Rest\View()
      */

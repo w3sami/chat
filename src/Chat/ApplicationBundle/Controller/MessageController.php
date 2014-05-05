@@ -42,7 +42,7 @@ class MessageController
      *  statusCodes={200="OK"}
      * )
      *
-     * @Route("/")
+     * @Route("")
      * @Method("GET")
      * @Rest\View()
      */
@@ -86,7 +86,7 @@ class MessageController
      *  }
      * )
      *
-     * @Route("/")
+     * @Route("")
      * @ParamConverter("json_to_param")
      * @ParamConverter("topic", name="topic", class="ChatApplicationBundle:Topic", options={"id" = "topic_id"})
      * @ParamConverter("message", converter="fos_rest.request_body")
@@ -121,7 +121,7 @@ class MessageController
      *  }
      * )
      *
-     * @Route("/")
+     * @Route("")
      *
      * @ParamConverter("message", name="newMessage", converter="fos_rest.request_body")
      * @ParamConverter("json_to_param")
