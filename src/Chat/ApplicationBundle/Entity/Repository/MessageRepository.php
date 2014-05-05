@@ -22,6 +22,8 @@ class MessageRepository extends EntityRepository
      */
     public function save(Message $message)
     {
+        $message->setTime(new \DateTime());
+
         $entityManager = $this->getEntityManager();
 
         $entityManager->persist($message);

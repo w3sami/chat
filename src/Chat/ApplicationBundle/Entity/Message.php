@@ -3,9 +3,21 @@ namespace Chat\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="Chat\ApplicationBundle\Entity\Repository\MessageRepository")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "chat_application_message_get",
+ *          parameters = {
+ *              "id" = "expr(object.getId())"
+ *          }
+ *      )
+ * )
  *
  * @Serializer\ExclusionPolicy("none")
  */
@@ -23,6 +35,9 @@ class Message
     /**
      * @ORM\Column(type="text", nullable=true)
      *
+     * @Assert\Length(min = "1", max = "160")
+     * @Assert\NotNull
+     *
      * @Serializer\Groups({"minimal"})
      */
     private $message;
@@ -36,6 +51,9 @@ class Message
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @Assert\Length(min = "1", max = "50")
+     * @Assert\NotNull
      *
      * @Serializer\Groups({"minimal"})
      */

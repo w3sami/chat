@@ -61,7 +61,7 @@ class MessageController
      *
      * @Route("")
      * @Method("GET")
-     * @Rest\View(serializerGroups={"minimal"})
+     * @Rest\View()
      */
     public function getMessageCollectionAction(ParamFetcherInterface $paramFetcher)
     {
@@ -133,9 +133,7 @@ class MessageController
             );
         }
         $message->setTopic($topic);
-        $message->setTime(new \DateTime());
-        //var_dump($message);
-        //\Doctrine\Common\Util\Debug::dump($message);
+
         return $this->messageService->save($message);
     }
 
@@ -177,12 +175,9 @@ class MessageController
             );
         }
         $message->setTopic($topic);
-        $message->setTime(new \DateTime());
         $message->setUser($newMessage->getUser());
         $message->setMessage($newMessage->getMessage());
 
-        //var_dump($message);
-        //\Doctrine\Common\Util\Debug::dump($message);
         return $this->messageService->save($message);
     }
 

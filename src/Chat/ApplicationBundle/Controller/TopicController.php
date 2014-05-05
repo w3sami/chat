@@ -100,11 +100,8 @@ class TopicController
         $topic->setTitle($newTopic->getTitle());
         $topic->setDescription($newTopic->getDescription());
 
-        //var_dump($topic);
-        //\Doctrine\Common\Util\Debug::dump($topic);
         return $this->topicService->save($topic);
     }
-
 
     /**
      * Return a collection of Topics
